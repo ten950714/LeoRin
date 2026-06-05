@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="RinAuto — надежный поставщик автозапчастей, расходных материалов и спецтехники напрямую из Южной Кореи. Экспорт по всему миру.">
   <title>RinAuto — Экспорт запчастей и спецтехники из Южной Кореи</title>
+  <meta name="description" content="RinAuto - поставка автозапчастей, расходных материалов и узлов спецтехники напрямую из Южной Кореи с экспортным сопровождением.">
+  <meta name="theme-color" content="#F7F9FC">
+  <title>RinAuto - экспорт запчастей и спецтехники из Южной Кореи</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
     :root {
       --bg:           #F6F8FA;
@@ -30,16 +36,47 @@
 
       --whatsapp:     #128C7E;
       --telegram:     #1F75A8;
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --surface-soft: #eef3f8;
+      --ink: #17202e;
+      --ink-strong: #0f1724;
+      --muted: #64748b;
+      --line: #dce4ee;
+      --accent: #e85b1b;
+      --accent-dark: #b83e10;
+      --accent-soft: #fff0e8;
+      --teal: #0f8f86;
+      --blue: #2463a6;
+      --shadow: 0 18px 60px rgba(20, 35, 55, 0.1);
+      --radius: 8px;
+      --container: 1200px;
+      --header-height: 82px;
     }
 
     html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--header-height);
+    }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      margin: 0;
+      min-width: 320px;
+      background:
+        linear-gradient(90deg, rgba(23, 32, 46, 0.035) 1px, transparent 1px),
+        linear-gradient(rgba(23, 32, 46, 0.035) 1px, transparent 1px),
+        var(--bg);
+      background-size: 56px 56px;
+      color: var(--ink);
+      font-family: "Manrope", Arial, sans-serif;
       line-height: 1.6;
+      letter-spacing: 0;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -51,6 +88,8 @@
         linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
       background-size: 60px 60px;
+    body.menu-open {
+      overflow: hidden;
     }
 
     /* ========================================== NAVIGATION */
@@ -60,41 +99,3 @@
       background: rgba(246, 248, 250, 0.4);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid transparent;
-    }
-
-    header.scrolled {
-      background: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-    }
-
-    .nav-container {
-      max-width: 1300px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 40px;
-      transition: padding 0.3s ease;
-    }
-
-    header.scrolled .nav-container { padding: 18px 40px; }
-
-    .logo {
-      font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
-      color: var(--text); text-decoration: none;
-    }
-
-    .logo em { color: var(--accent); font-style: normal; }
-
-    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
-
-    .nav-links a {
-      font-size: 14px; font-weight: 500;
-      color: var(--muted); text-decoration: none; transition: color 0.2s ease;
-      position: relative; padding: 4px 0;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: rgba(230, 81, 0, 0.08) !important;
-      color: var(--accent) !important;
