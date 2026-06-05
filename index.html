@@ -14,20 +14,20 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:           #F6F8FA; /* Светлый технологичный фон */
-      --surface:      #FFFFFF; /* Чистый белый для панелей */
+      --bg:           #F6F8FA;
+      --surface:      #FFFFFF;
       --card:         #FFFFFF;
       --card-hover:   #FAFAFC;
-      --accent:       #E65100; /* Насыщенный янтарный для светлого фона */
+      --accent:       #E65100;
       --accent-hover: #BF3600;
       --accent-soft:  rgba(230, 81, 0, 0.04);
       --accent-glow:  rgba(230, 81, 0, 0.15);
-      --text:         #1F2937; /* Темно-серый для отличной читаемости */
-      --muted:        #6B7280; /* Спокойный серый для второстепенного текста */
-      --border:       #E5E7EB; /* Светлая аккуратная граница */
+      --text:         #1F2937;
+      --muted:        #6B7280;
+      --border:       #E5E7EB;
       --border-hover: rgba(230, 81, 0, 0.3);
       --radius-lg:    24px;
-      
+
       --whatsapp:     #128C7E;
       --telegram:     #1F75A8;
     }
@@ -43,12 +43,11 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Фоновая технологичная сетка (адаптирована под светлый фон) */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0;
       pointer-events: none;
-      background-image: 
+      background-image:
         linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
       background-size: 60px 60px;
@@ -63,386 +62,39 @@
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
     }
+
     header.scrolled {
       background: rgba(255, 255, 255, 0.9);
       border-bottom: 1px solid var(--border);
       box-shadow: 0 10px 30px rgba(0,0,0,0.04);
     }
-    
+
     .nav-container {
       max-width: 1300px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
       padding: 28px 40px;
       transition: padding 0.3s ease;
     }
+
     header.scrolled .nav-container { padding: 18px 40px; }
 
     .logo {
       font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
       color: var(--text); text-decoration: none;
     }
+
     .logo em { color: var(--accent); font-style: normal; }
 
     .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+
     .nav-links a {
       font-size: 14px; font-weight: 500;
       color: var(--muted); text-decoration: none; transition: color 0.2s ease;
       position: relative; padding: 4px 0;
     }
+
     .nav-links a:hover { color: var(--text); }
-    
+
     .nav-cta {
       background: rgba(230, 81, 0, 0.08) !important;
       color: var(--accent) !important;
-      border: 1px solid rgba(230, 81, 0, 0.2) !important;
-      padding: 10px 22px; border-radius: 8px; font-weight: 600;
-    }
-    .nav-cta:hover { 
-      background: var(--accent) !important;
-      color: #fff !important;
-      box-shadow: 0 8px 20px var(--accent-glow) !important; 
-    }
-
-    .burger {
-      display: none; flex-direction: column; gap: 6px;
-      background: none; border: none; cursor: pointer; z-index: 1000;
-    }
-    .burger span { display: block; width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
-    .burger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .burger.active span:nth-child(2) { opacity: 0; }
-    .burger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-    /* ========================================== GLOBAL ELEMENTS */
-    .container { max-width: 1300px; margin: 0 auto; position: relative; z-index: 2; width: 100%; }
-    section { position: relative; z-index: 1; padding: 120px 40px; border-bottom: 1px solid var(--border); }
-    
-    .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 20px; }
-    .section-title { font-size: clamp(32px, 4vw, 44px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; color: var(--text); margin-bottom: 24px; }
-    .section-desc { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 650px; margin-bottom: 56px; }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px; background: rgba(230, 81, 0, 0.06); border: 1px solid rgba(230, 81, 0, 0.15);
-      color: var(--accent); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 600; margin-bottom: 28px;
-    }
-    .badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(230,81,0,0.4);} 70% {box-shadow: 0 0 0 8px rgba(230,81,0,0);} 100% {box-shadow: 0 0 0 0 rgba(230,81,0,0);} }
-
-    /* ========================================== HERO SECTION */
-    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 160px; overflow: hidden; }
-    .hero-glow { position: absolute; right: -5%; top: 10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(230, 81, 0, 0.04) 0%, transparent 70%); filter: blur(50px); pointer-events: none; }
-    .hero-content { max-width: 850px; }
-    .hero-title { font-size: clamp(40px, 6vw, 64px); font-weight: 800; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 28px; }
-    .hero-title span { color: var(--accent); }
-    .hero-desc { font-size: 19px; color: var(--muted); max-width: 680px; margin-bottom: 44px; }
-    
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff; padding: 18px 36px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.25s; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 12px 28px var(--accent-glow); }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--text); padding: 18px 36px; border-radius: 12px; border: 1px solid var(--border); font-weight: 600; text-decoration: none; transition: 0.25s; }
-    .btn-secondary:hover { border-color: rgba(0, 0, 0, 0.15); background: rgba(0,0,0,0.01); }
-
-    .hero-stats { display: flex; gap: 80px; margin-top: 72px; border-top: 1px solid var(--border); padding-top: 40px; }
-    .stat-val { font-size: 36px; font-weight: 800; color: var(--text); }
-    .stat-val span { color: var(--accent); }
-    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
-    /* ========================================== TICKER */
-    .ticker { background: var(--surface); padding: 20px 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .ticker-track { display: flex; gap: 50px; animation: scroll 35s linear infinite; width: max-content; }
-    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .ticker-item { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); display: flex; align-items: center; gap: 50px; }
-    .ticker-item::after { content: '✦'; color: var(--accent); }
-
-    /* ========================================== SERVICES */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
-    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; transition: 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-    .service-card:hover { transform: translateY(-6px); border-color: var(--border-hover); background: var(--card-hover); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
-    .service-icon { width: 52px; height: 52px; background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 32px; }
-    .service-card:hover .service-icon { background: var(--accent-soft); border-color: rgba(230, 81, 0, 0.2); color: var(--accent); }
-    .service-title { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
-    .service-list { list-style: none; padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
-    .service-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text); }
-    .service-list li::before { content: '→'; color: var(--accent); font-weight: 700; }
-
-    /* ========================================== ABOUT US */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .feat-box { background: var(--surface); border: 1px solid var(--border); padding: 32px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-    .feat-box h4 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
-    .feat-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-    /* ========================================== GEOGRAPHY */
-    .geo-card { background: radial-gradient(circle at top, var(--surface), var(--bg)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 64px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.02); }
-    .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-top: 48px; }
-    .geo-item { padding: 16px; border-left: 2px solid var(--border); text-align: left; transition: 0.3s; }
-    .geo-item:hover { border-left-color: var(--accent); background: var(--accent-soft); }
-    .geo-item h4 { font-size: 18px; margin-bottom: 4px; }
-    .geo-item p { font-size: 13px; color: var(--muted); }
-
-    /* ========================================== ORDER & CHAT */
-    .order-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
-    .step-box { display: flex; gap: 24px; position: relative; }
-    .step-box:not(:last-child)::after { content: ''; position: absolute; left: 22px; top: 46px; bottom: -10px; width: 1px; background: var(--border); }
-    .step-num { width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: 700; transition: 0.3s; }
-    .step-box:hover .step-num { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-    .step-content { padding-bottom: 40px; }
-    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
-    
-    .chat-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; box-shadow: 0 10px 40px rgba(0,0,0,0.02); }
-    .messenger-options { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
-    .msg-btn { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; color: #fff; transition: 0.25s; }
-    .msg-btn--wa { background: var(--whatsapp); }
-    .msg-btn--wa:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(18, 140, 126, 0.25); }
-    .msg-btn--tg { background: var(--telegram); }
-    .msg-btn--tg:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(31, 117, 168, 0.25); }
-    .msg-meta { font-size: 12px; background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: 20px; }
-
-    /* ========================================== FLOATING WIDGET */
-    .floating-widget { position: fixed; bottom: 32px; right: 32px; z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-    .fw-trigger { width: 60px; height: 60px; border-radius: 16px; background: var(--accent); border: none; color: #fff; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 30px var(--accent-glow); transition: 0.3s; }
-    .fw-menu { display: none; flex-direction: column; gap: 10px; }
-    .fw-menu.active { display: flex; }
-    .fw-link { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 14px; font-weight: bold; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-    .fw-link--wa { background: var(--whatsapp); }
-    .fw-link--tg { background: var(--telegram); }
-
-    /* ========================================== RESPONSIVE */
-    @media (max-width: 1100px) {
-      section { padding: 100px 32px; }
-      .about-grid, .order-grid { grid-template-columns: 1fr; gap: 48px; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: var(--surface); flex-direction: column; justify-content: center; padding: 40px; transition: right 0.4s; gap: 24px; }
-      .nav-links.active { right: 0; }
-      .burger { display: flex; }
-      .hero-stats { gap: 32px; flex-wrap: wrap; }
-      .about-features { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-
-<header id="header">
-  <div class="nav-container">
-    <a href="#home" class="logo">Rin<em>Auto</em></a>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#services">Услуги</a></li>
-      <li><a href="#about">О нас</a></li>
-      <li><a href="#geography">География</a></li>
-      <li><a href="#order">Как заказать</a></li>
-      <li><a href="#order" class="nav-cta">Написать в чат</a></li>
-    </ul>
-    <button class="burger" id="burger" aria-label="Открыть меню">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<!-- HOME SECTION -->
-<section class="hero" id="home">
-  <div class="hero-glow"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="badge"><div class="badge-dot"></div>Экспорт из Южной Кореи</div>
-      <h1 class="hero-title">Прямые поставки запчастей и спецтехники <span>по ценам заводов</span></h1>
-      <p class="hero-desc">Заказывайте оригинальные детали без наценок и перекупщиков. Отправьте VIN-код или спецификацию в чат — мы проверим наличие на дилерских складах Mobis, Doosan, Hyundai и возьмем экспорт на себя.</p>
-      <div class="hero-actions">
-        <a href="#order" class="btn-primary">Подобрать детали в чате 💬</a>
-        <a href="#services" class="btn-secondary">Посмотреть услуги</a>
-      </div>
-      <div class="hero-stats">
-        <div><div class="stat-val">15<span>мин</span></div><div class="stat-label">Среднее время ответа</div></div>
-        <div><div class="stat-val">0<span>%</span></div><div class="stat-label">Скрытых комиссий</div></div>
-        <div><div class="stat-val">24<span>/7</span></div><div class="stat-label">Прием ваших заявок</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RUNNING TICKER -->
-<div class="ticker">
-  <div class="ticker-track">
-    <span class="ticker-item">Автозапчасти OEM</span>
-    <span class="ticker-item">Детали для коммерческого транспорта</span>
-    <span class="ticker-item">Комплектующие для спецтехники</span>
-    <span class="ticker-item">Расходные материалы для ТО</span>
-    <span class="ticker-item">Прямой экспорт без посредников</span>
-  </div>
-</div>
-
-<!-- SERVICES SECTION -->
-<section id="services">
-  <div class="container">
-    <span class="section-label">Что мы поставляем</span>
-    <h2 class="section-title">Профессиональные B2B решения</h2>
-    <p class="section-desc">Обеспечиваем бесперебойное снабжение вашего бизнеса оригинальными узлами, агрегатами и расходными материалами напрямую со складов производителей.</p>
-    
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">📦</div>
-        <h3 class="service-title">Оригинальные запчасти</h3>
-        <p class="service-desc">Полный доступ к корейским каталогам Hyundai, Kia, Mobis. Работаем напрямую с оптовыми дистрибьюторами.</p>
-        <ul class="service-list">
-          <li>Двигатели в сборе и блоки</li>
-          <li>Элементы подвески и трансмиссии</li>
-          <li>Оптика и кузовные панели</li>
-        </ul>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🚜</div>
-        <h3 class="service-title">Спецтехника и агрегаты</h3>
-        <p class="service-desc">Поставка тяжелых узлов для экскаваторов, погрузчиков и кранов марок Doosan, Volvo, Hyundai.</p>
-        <ul class="service-list">
-          <li>Гидравлические насосы и клапаны</li>
-          <li>Редукторы хода и поворота</li>
-          <li>Гусеничные цепи и элементы ходовой</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT SECTION -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div>
-        <span class="section-label">О компании</span>
-        <h2 class="section-title">Прозрачный сервис экспорта из Кореи</h2>
-        <p class="section-desc" style="margin-bottom:0;">Мы исключили из цепочки поставок локальных перекупщиков. Вы получаете детали по реальной стоимости внутреннего рынка Южной Кореи, оплачивая только фиксированную стоимость наших услуг по подбору, проверке и отправке груза.</p>
-      </div>
-      <div class="about-features">
-        <div class="feat-box">
-          <h4>Официально</h4>
-          <p>Полный пакет экспортных документов для беспрепятственного прохождения таможни.</p>
-        </div>
-        <div class="feat-box">
-          <h4>Контроль качества</h4>
-          <p>Проверяем каждую позицию на соответствие VIN-коду перед упаковкой на складе.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GEOGRAPHY SECTION -->
-<section id="geography">
-  <div class="container">
-    <div class="geo-card">
-      <span class="section-label">Логистика</span>
-      <h2 class="section-title" style="margin-bottom:16px;">Доставка по всему миру</h2>
-      <p class="section-desc" style="margin: 0 auto 40px; text-align:center;">Отлаженные каналы отправки позволяют доставлять заказы любого объема — от экспресс-посылок до сборных морских контейнеров.</p>
-      
-      <div class="geo-grid">
-        <div class="geo-item">
-          <h4>Авиа-фрахт</h4>
-          <p>Срочные заказы и дефицитные позиции. Срок: от 5–7 дней.</p>
-        </div>
-        <div class="geo-item">
-          <h4>Морские перевозки</h4>
-          <p>Оптимально для тяжелых узлов спецтехники и крупных партий.</p>
-        </div>
-        <div class="geo-item">
-          <h4>Сборные грузы (LCL)</h4>
-          <p>Экономим ваш бюджет при отправке небольших партий товара.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ORDER SECTION -->
-<section id="order" style="border-bottom: none;">
-  <div class="container">
-    <div class="order-grid">
-      <div>
-        <span class="section-label">Процесс работы</span>
-        <h2 class="section-title">Три шага к получению запчастей</h2>
-        
-        <div style="margin-top: 40px; display: flex; flex-direction: column;">
-          <div class="step-box">
-            <div class="step-num">01</div>
-            <div class="step-content">
-              <h3 class="step-title">Запрос в мессенджер</h3>
-              <p class="step-desc" style="color: var(--muted); font-size:15px;">Скидывайте парт-номера, VIN-код автомобиля или фотографии нужного узла прямо в чат.</p>
-            </div>
-          </div>
-          <div class="step-box">
-            <div class="step-num">02</div>
-            <div class="step-content">
-              <h3 class="step-title">Согласование сметы</h3>
-              <p class="step-desc" style="color: var(--muted); font-size:15px;">В течение 15 минут мы проверяем остатки на корейских складах и присылаем вам итоговую стоимость.</p>
-            </div>
-          </div>
-          <div class="step-box">
-            <div class="step-num">03</div>
-            <div class="step-content">
-              <h3 class="step-title">Упаковка и отправка</h3>
-              <p class="step-desc" style="color: var(--muted); font-size:15px;">Надежно упаковываем груз по международным стандартам защиты и передаем транспортной компании.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="chat-container">
-        <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 12px;">Прямая связь с менеджром</h3>
-        <p style="color: var(--muted); font-size: 15px;">Выберите платформу. Мы бесплатно проконсультируем и подберем запчасти по официальным базам данных.</p>
-        
-        <div class="messenger-options">
-          <a href="https://wa.me/your_number" target="_blank" class="msg-btn msg-btn--wa">
-            <span>WhatsApp</span>
-            <span class="msg-meta">Online</span>
-          </a>
-          <a href="https://t.me/your_username" target="_blank" class="msg-btn msg-btn--tg">
-            <span>Telegram</span>
-            <span class="msg-meta">Online</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FLOATING WIDGET -->
-<div class="floating-widget">
-  <div class="fw-menu" id="fw-menu">
-    <a href="https://wa.me/your_number" target="_blank" class="fw-link fw-link--wa">WA</a>
-    <a href="https://t.me/your_username" target="_blank" class="fw-link fw-link--tg">TG</a>
-  </div>
-  <button class="fw-trigger" id="fw-trigger" aria-label="Связаться">💬</button>
-</div>
-
-<script>
-  // Логика прозрачности шапки при скролле
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  // Мобильное меню (бургер)
-  const burger = document.getElementById('burger');
-  const navLinks = document.getElementById('nav-links');
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-  });
-
-  // Закрытие мобильного меню при клике на ссылки
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      burger.classList.remove('active');
-      navLinks.classList.remove('active');
-    });
-  });
-
-  // Плавающий виджет контактов
-  const fwTrigger = document.getElementById('fw-trigger');
-  const fwMenu = document.getElementById('fw-menu');
-  fwTrigger.addEventListener('click', () => {
-    fwMenu.classList.toggle('active');
-  });
-</script>
-
-</body>
-</html>
