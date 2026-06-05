@@ -18,24 +18,21 @@
       --surface:      #0F131A;
       --card:         #141923;
       --card-hover:   #1A212E;
-      --accent:       #FF7A00; /* Индустриальный премиальный оранжевый */
+      --accent:       #FF7A00; /* Индустриальный янтарный */
       --accent-hover: #E66E00;
-      --accent-soft:  rgba(255, 122, 0, 0.1);
+      --accent-soft:  rgba(255, 122, 0, 0.06);
       --accent-glow:  rgba(255, 122, 0, 0.25);
-      --blue-gray:    #1F2937;
       --text:         #F3F4F6;
       --muted:        #9CA3AF;
-      --dim:          #4B5563;
       --border:       rgba(255, 255, 255, 0.05);
       --border-hover: rgba(255, 122, 0, 0.25);
-      --radius:       16px;
       --radius-lg:    24px;
       
-      --whatsapp:     #25D366;
-      --telegram:     #0088cc;
+      --whatsapp:     #128C7E;
+      --telegram:     #1F75A8;
     }
 
-    html { scroll-behavior: auto; }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -44,33 +41,30 @@
       overflow-x: hidden;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
-    /* Деликатная фоновая сетка */
+    /* Фоновая технологичная сетка */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0;
       pointer-events: none;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
       background-size: 60px 60px;
     }
 
-    /* ========================================== HEADER & NAV */
+    /* ========================================== NAVIGATION */
     header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       background: rgba(7, 9, 14, 0.2);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
     }
     header.scrolled {
-      background: rgba(15, 19, 26, 0.85);
+      background: rgba(15, 19, 26, 0.9);
       border-bottom: 1px solid var(--border);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
@@ -85,220 +79,144 @@
 
     .logo {
       font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
-      color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 6px;
+      color: var(--text); text-decoration: none;
     }
     .logo em { color: var(--accent); font-style: normal; }
 
-    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; margin: 0; }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
     .nav-links a {
       font-size: 14px; font-weight: 500;
       color: var(--muted); text-decoration: none; transition: color 0.2s ease;
       position: relative; padding: 4px 0;
     }
-    .nav-links a:hover, .nav-links a.active-link { color: var(--text); }
-    
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-      background: var(--accent); transform: scaleX(0); transform-origin: right;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .nav-links a:hover::after, .nav-links a.active-link::after {
-      transform: scaleX(1); transform-origin: left;
-    }
+    .nav-links a:hover { color: var(--text); }
     
     .nav-cta {
       background: rgba(255, 122, 0, 0.1) !important;
       color: var(--accent) !important;
       border: 1px solid rgba(255, 122, 0, 0.3) !important;
-      padding: 10px 22px; border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease !important;
+      padding: 10px 22px; border-radius: 8px; font-weight: 600;
     }
     .nav-cta:hover { 
       background: var(--accent) !important;
       color: #000 !important;
-      border-color: var(--accent) !important;
-      transform: translateY(-1px);
       box-shadow: 0 8px 20px var(--accent-glow) !important; 
     }
 
     .burger {
       display: none; flex-direction: column; gap: 6px;
-      background: none; border: none; cursor: pointer; padding: 4px; z-index: 1000;
+      background: none; border: none; cursor: pointer; z-index: 1000;
     }
-    .burger span { 
-      display: block; width: 22px; height: 2px; 
-      background: var(--text); transition: 0.3s ease; 
-    }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
     .burger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .burger.active span:nth-child(2) { opacity: 0; }
     .burger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* ========================================== SPA ROUTING */
-    #app-content { flex: 1; position: relative; z-index: 1; }
-    
-    .page { display: none; opacity: 0; animation: fadeInPage 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-    .page.active { display: block; }
-
-    @keyframes fadeInPage {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .page-header {
-      padding: 180px 40px 100px;
-      background: radial-gradient(circle at 50% 0%, var(--card), var(--bg));
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-    .ph-title {
-      font-size: clamp(38px, 5vw, 52px); font-weight: 800; letter-spacing: -1px;
-      color: var(--text); margin-bottom: 20px;
-    }
-    .ph-desc {
-      font-size: 18px; color: var(--muted); max-width: 650px; margin: 0 auto; font-weight: 400;
-    }
-
-    /* ========================================== HERO (HOME) */
-    .hero {
-      position: relative; min-height: 100vh;
-      display: flex; align-items: center; padding: 180px 40px 120px; overflow: hidden;
-    }
+    /* ========================================== GLOBAL ELEMENTS */
     .container { max-width: 1300px; margin: 0 auto; position: relative; z-index: 2; width: 100%; }
-
-    .hero-glow-1 { position: absolute; right: -5%; top: 10%; width: 550px; height: 550px; border-radius: 50%; background: radial-gradient(circle, rgba(255,122,0,0.08) 0%, transparent 65%); filter: blur(40px); pointer-events: none; }
-    .hero-glow-2 { position: absolute; left: -10%; bottom: -10%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(31,41,55,0.4) 0%, transparent 70%); filter: blur(50px); pointer-events: none; }
-
-    .hero-content { max-width: 850px; }
+    section { position: relative; z-index: 1; padding: 120px 40px; border-bottom: 1px solid var(--border); }
+    
+    .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 20px; }
+    .section-title { font-size: clamp(32px, 4vw, 44px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; color: var(--text); margin-bottom: 24px; }
+    .section-desc { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 650px; margin-bottom: 56px; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 8px; background: rgba(255,122,0,0.06); border: 1px solid rgba(255,122,0,0.15);
-      color: var(--accent); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 28px;
+      color: var(--accent); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 600; margin-bottom: 28px;
     }
     .badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(255,122,0,0.5);} 70% {box-shadow: 0 0 0 8px rgba(255,122,0,0);} 100% {box-shadow: 0 0 0 0 rgba(255,122,0,0);} }
+    @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(255,122,0,0.4);} 70% {box-shadow: 0 0 0 8px rgba(255,122,0,0);} 100% {box-shadow: 0 0 0 0 rgba(255,122,0,0);} }
 
-    .hero-title { font-size: clamp(42px, 6vw, 68px); font-weight: 800; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 28px; }
+    /* ========================================== HERO SECTION */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 160px; overflow: hidden; }
+    .hero-glow { position: absolute; right: -5%; top: 10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,122,0,0.07) 0%, transparent 70%); filter: blur(50px); pointer-events: none; }
+    .hero-content { max-width: 850px; }
+    .hero-title { font-size: clamp(40px, 6vw, 64px); font-weight: 800; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 28px; }
     .hero-title span { color: var(--accent); }
-    .hero-desc { font-size: 19px; color: var(--muted); max-width: 680px; line-height: 1.65; margin-bottom: 44px; }
-
+    .hero-desc { font-size: 19px; color: var(--muted); max-width: 680px; margin-bottom: 44px; }
+    
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #000; padding: 18px 38px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.25s ease; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #000; padding: 18px 36px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.25s; }
     .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 12px 28px var(--accent-glow); }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--text); padding: 18px 38px; border-radius: 10px; border: 1px solid var(--border); font-weight: 600; font-size: 15px; text-decoration: none; transition: all 0.25s ease; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--text); padding: 18px 36px; border-radius: 12px; border: 1px solid var(--border); font-weight: 600; text-decoration: none; transition: 0.25s; }
     .btn-secondary:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); }
 
     .hero-stats { display: flex; gap: 80px; margin-top: 72px; border-top: 1px solid var(--border); padding-top: 40px; }
-    .stat-val { font-size: 38px; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+    .stat-val { font-size: 36px; font-weight: 800; color: var(--text); }
     .stat-val span { color: var(--accent); }
-    .stat-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 6px; }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
     /* ========================================== TICKER */
-    .ticker-section { position: relative; z-index: 2; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 24px 0; }
-    .ticker-track { display: flex; gap: 40px; animation: scrollTicker 40s linear infinite; width: max-content; }
-    @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .ticker-item { display: inline-flex; align-items: center; gap: 40px; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); white-space: nowrap; }
-    .ticker-sep { color: var(--accent); opacity: 0.6; }
-
-    /* ========================================== SECTIONS GENERAL */
-    section { position: relative; z-index: 1; padding: 140px 40px; }
-    .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 20px; }
-    .section-title { font-size: clamp(34px, 4vw, 46px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; color: var(--text); margin-bottom: 24px; }
-    .section-desc { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 650px; }
+    .ticker { background: var(--surface); padding: 20px 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .ticker-track { display: flex; gap: 50px; animation: scroll 35s linear infinite; width: max-content; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .ticker-item { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); display: flex; align-items: center; gap: 50px; }
+    .ticker-item::after { content: '✦'; color: var(--accent); }
 
     /* ========================================== SERVICES */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; margin-top: 64px; }
-    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 52px 44px; display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .service-card:hover { transform: translateY(-6px); border-color: var(--border-hover); background: var(--card-hover); box-shadow: 0 24px 48px rgba(0,0,0,0.4); }
-    
-    .service-icon { width: 56px; height: 56px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 36px; transition: all 0.3s ease; }
-    .service-card:hover .service-icon { background: var(--accent-soft); border-color: rgba(255, 122, 0, 0.3); color: var(--accent); }
-    
-    .service-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 16px; letter-spacing: -0.5px; }
-    .service-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; flex: 1; }
-    .service-list { list-style: none; padding-top: 28px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
-    .service-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); font-weight: 500; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; transition: 0.3s; }
+    .service-card:hover { transform: translateY(-6px); border-color: var(--border-hover); background: var(--card-hover); }
+    .service-icon { width: 52px; height: 52px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 32px; }
+    .service-card:hover .service-icon { background: var(--accent-soft); border-color: rgba(255, 122, 0, 0.2); color: var(--accent); }
+    .service-title { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+    .service-list { list-style: none; padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+    .service-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text); }
     .service-list li::before { content: '→'; color: var(--accent); font-weight: 700; }
 
-    /* ========================================== HOW TO ORDER / CHAT MODULE */
-    .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .steps-wrapper { margin-top: 48px; display: flex; flex-direction: column; }
-    .step-box { display: flex; gap: 28px; position: relative; }
+    /* ========================================== ABOUT US */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .feat-box { background: var(--surface); border: 1px solid var(--border); padding: 32px; border-radius: 16px; }
+    .feat-box h4 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+    .feat-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ========================================== GEOGRAPHY */
+    .geo-card { background: radial-gradient(table at top, var(--card), var(--bg)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 64px; text-align: center; }
+    .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-top: 48px; }
+    .geo-item { padding: 16px; border-left: 2px solid var(--border); text-align: left; transition: 0.3s; }
+    .geo-item:hover { border-left-color: var(--accent); background: var(--accent-soft); }
+    .geo-item h4 { font-size: 18px; margin-bottom: 4px; }
+    .geo-item p { font-size: 13px; color: var(--muted); }
+
+    /* ========================================== ORDER & CHAT */
+    .order-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+    .step-box { display: flex; gap: 24px; position: relative; }
     .step-box:not(:last-child)::after { content: ''; position: absolute; left: 22px; top: 46px; bottom: -10px; width: 1px; background: var(--border); }
-    
-    .step-num { width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; z-index: 1; transition: all 0.3s; }
+    .step-num { width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: 700; transition: 0.3s; }
     .step-box:hover .step-num { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-    .step-content { padding-bottom: 44px; }
-    .step-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.3px; }
-    .step-desc { font-size: 15px; color: var(--muted); line-height: 1.65; }
-
-    /* CHAT ENTERPRISE WIDGET */
-    .chat-container { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 52px; position: relative; }
-    .chat-header { margin-bottom: 36px; }
-    .c-head-title { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 12px; letter-spacing: -0.5px; }
-    .c-head-sub { font-size: 15px; color: var(--muted); line-height: 1.6; }
-    .c-head-sub strong { color: var(--text); }
-
-    .messenger-options { display: flex; flex-direction: column; gap: 14px; }
-    .msg-btn { display: flex; align-items: center; justify-content: space-between; padding: 22px 28px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 15px; color: #fff; transition: all 0.25s ease; }
+    .step-content { padding-bottom: 40px; }
+    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
     
-    .msg-btn--wa { background: #128C7E; }
-    .msg-btn--wa:hover { background: #149d8e; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(18, 140, 126, 0.25); }
-    
-    .msg-btn--tg { background: #1F75A8; }
-    .msg-btn--tg:hover { background: #2484be; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(31, 117, 168, 0.25); }
-
-    .msg-btn-content { display: flex; align-items: center; gap: 16px; }
-    .msg-icon { font-size: 22px; }
-    .msg-meta { font-size: 12px; font-weight: 600; opacity: 0.8; background: rgba(0,0,0,0.12); padding: 5px 12px; border-radius: 30px; letter-spacing: 0.5px; }
-
-    .chat-guarantee { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); display: flex; gap: 10px; }
-    .chat-guarantee span { color: var(--accent); }
+    .chat-container { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; }
+    .messenger-options { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+    .msg-btn { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; color: #fff; transition: 0.25s; }
+    .msg-btn--wa { background: var(--whatsapp); }
+    .msg-btn--wa:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(18, 140, 126, 0.25); }
+    .msg-btn--tg { background: var(--telegram); }
+    .msg-btn--tg:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(31, 117, 168, 0.25); }
+    .msg-meta { font-size: 12px; background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: 20px; }
 
     /* ========================================== FLOATING WIDGET */
     .floating-widget { position: fixed; bottom: 32px; right: 32px; z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-    .fw-trigger { width: 60px; height: 60px; border-radius: 16px; background: var(--accent); border: none; color: #000; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 30px var(--accent-glow); transition: all 0.3s ease; position: relative; }
-    .fw-trigger:hover { transform: scale(1.04); background: var(--accent-hover); }
-    .fw-badge { position: absolute; top: -3px; right: -3px; width: 12px; height: 12px; background: var(--whatsapp); border: 2px solid var(--bg); border-radius: 50%; }
-
-    .fw-menu { display: none; flex-direction: column; gap: 10px; margin-bottom: 6px; }
+    .fw-trigger { width: 60px; height: 60px; border-radius: 16px; background: var(--accent); border: none; color: #000; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 30px var(--accent-glow); transition: 0.3s; }
+    .fw-menu { display: none; flex-direction: column; gap: 10px; }
     .fw-menu.active { display: flex; }
-    .fw-link { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: all 0.2s ease; }
-    .fw-link:hover { transform: scale(1.08) translateY(-2px); }
-    .fw-link--wa { background: #128C7E; }
-    .fw-link--tg { background: #1F75A8; }
+    .fw-link { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 14px; font-weight: bold; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+    .fw-link--wa { background: var(--whatsapp); }
+    .fw-link--tg { background: var(--telegram); }
 
     /* ========================================== RESPONSIVE */
     @media (max-width: 1100px) {
-      .hero { padding: 160px 32px 100px; }
-      section, .page-header { padding: 100px 32px; }
-      .order-grid { grid-template-columns: 1fr; gap: 64px; }
-      .hero-stats { gap: 48px; }
+      section { padding: 100px 32px; }
+      .about-grid, .order-grid { grid-template-columns: 1fr; gap: 48px; }
     }
-    
     @media (max-width: 768px) {
-      .nav-container { padding: 20px 24px; }
-      header.scrolled .nav-container { padding: 16px 24px; }
-      
-      .nav-links {
-        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-        background: var(--surface); flex-direction: column; justify-content: center;
-        padding: 40px; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); gap: 24px;
-      }
+      .nav-links { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: var(--surface); flex-direction: column; justify-content: center; padding: 40px; transition: right 0.4s; gap: 24px; }
       .nav-links.active { right: 0; }
-      
       .burger { display: flex; }
-      .hero { padding: 140px 24px 80px; }
-      .hero-title { font-size: 38px; }
       .hero-stats { gap: 32px; flex-wrap: wrap; }
-      section, .page-header { padding: 80px 24px; }
-      .chat-container { padding: 36px 24px; }
-    }
-
-    @media (max-width: 480px) {
-      .hero-actions { flex-direction: column; width: 100%; }
-      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-      .stat-val { font-size: 32px; }
+      .about-features { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -320,164 +238,189 @@
   </div>
 </header>
 
-<main id="app-content">
-
-  <div id="page-home" class="page active">
-    <section class="hero">
-      <div class="hero-glow-1"></div>
-      <div class="hero-glow-2"></div>
-      <div class="container">
-        <div class="hero-content">
-          <div class="badge"><div class="badge-dot"></div>Экспорт из Южной Кореи</div>
-          <h1 class="hero-title">Прямые поставки запчастей и спецтехники <span>по ценам заводов</span></h1>
-          <p class="hero-desc">Заказывайте оригинальные детали без посредников. Отправьте нам фото детали или VIN-код в чат — мы мгновенно проверим наличие на складах дилеров Mobis, Doosan, Hyundai и организуем экспорт.</p>
-          <div class="hero-actions">
-            <a href="#order" class="btn-primary">Подобрать детали в чате 💬</a>
-            <a href="#services" class="btn-secondary">Наши услуги</a>
-          </div>
-          <div class="hero-stats">
-            <div><div class="stat-val">15<span>мин</span></div><div class="stat-label">Среднее время ответа</div></div>
-            <div><div class="stat-val">0<span>%</span></div><div class="stat-label">Накрутка на цену завода</div></div>
-            <div><div class="stat-val">24<span>/7</span></div><div class="stat-label">Прием заявок</div></div>
-          </div>
-        </div>
+<!-- HOME SECTION -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="badge"><div class="badge-dot"></div>Экспорт из Южной Кореи</div>
+      <h1 class="hero-title">Прямые поставки запчастей и спецтехники <span>по ценам заводов</span></h1>
+      <p class="hero-desc">Заказывайте оригинальные детали без наценок и перекупщиков. Отправьте VIN-код или спецификацию в чат — мы проверим наличие на дилерских складах Mobis, Doosan, Hyundai и возьмем экспорт на себя.</p>
+      <div class="hero-actions">
+        <a href="#order" class="btn-primary">Подобрать детали в чате 💬</a>
+        <a href="#services" class="btn-secondary">Посмотреть услуги</a>
       </div>
-    </section>
-
-    <div class="ticker-section">
-      <div class="ticker-track">
-        <span class="ticker-item">Автозапчасти OEM <span class="ticker-sep">✦</span></span>
-        <span class="ticker-item">Запчасти для коммерческого транспорта <span class="ticker-sep">✦</span></span>
-        <span class="ticker-item">Комплектующие для спецтехники <span class="ticker-sep">✦</span></span>
-        <span class="ticker-item">Расходные материалы <span class="ticker-sep">✦</span></span>
-        <span class="ticker-item">Техника под ключ <span class="ticker-sep">✦</span></span>
-      </div>
-    </div>
-
-    <section>
-      <div class="container" style="text-align: center;">
-        <h2 class="section-title">Комплексные B2B поставки</h2>
-        <p class="section-desc" style="margin: 0 auto 40px;">Мы предлагаем честный формат: вы получаете доступ к официальным корейским прайс-листам, а мы берем на себя быстрый выкуп, таможенное оформление и логистику.</p>
-        <a href="#services" class="btn-secondary">Подробнее об услугах</a>
-      </div>
-    </section>
-  </div>
-
-  <div id="page-services" class="page">
-    <div class="page-header">
-      <h1 class="ph-title">Наши услуги</h1>
-      <p class="ph-desc">Широкий ассортимент оригинальных и аналоговых запчастей, а также поставка техники напрямую из Кореи</p>
-    </div>
-    
-    <div class="container">
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">📦</div>
-          <h3 class="service-title">Оригинальные запчасти</h3>
-          <p class="service-desc">Прямой доступ к дилерским складам Hyundai, Kia, Mobis без посредников.</p>
-          <ul class="service-list">
-            <li>Двигатели и трансмиссии</li>
-            <li>Детали ходовой части</li>
-            <li>Кузовные элементы</li>
-          </ul>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🚜</div>
-          <h3 class="service-title">Спецтехника и узлы</h3>
-          <p class="service-desc">Поставка тяжелой техники и комплектующих Doosan, Volvo, Hyundai.</p>
-          <ul class="service-list">
-            <li>Гидравлические насосы</li>
-            <li>Редукторы и гидромоторы</li>
-            <li>Расходники для ТО</li>
-          </ul>
-        </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">15<span>мин</span></div><div class="stat-label">Среднее время ответа</div></div>
+        <div><div class="stat-val">0<span>%</span></div><div class="stat-label">Скрытых комиссий</div></div>
+        <div><div class="stat-val">24<span>/7</span></div><div class="stat-label">Прием ваших заявок</div></div>
       </div>
     </div>
   </div>
+</section>
 
-  <div id="page-order" class="page">
-    <div class="page-header">
-      <h1 class="ph-title">Как сделать заказ</h1>
-      <p class="ph-desc">Простой и прозрачный процесс взаимодействия от заявки до получения груза</p>
-    </div>
+<!-- RUNNING TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Автозапчасти OEM</span>
+    <span class="ticker-item">Детали для коммерческого транспорта</span>
+    <span class="ticker-item">Комплектующие для спецтехники</span>
+    <span class="ticker-item">Расходные материалы для ТО</span>
+    <span class="ticker-item">Прямой экспорт без посредников</span>
+  </div>
+</div>
+
+<!-- SERVICES SECTION -->
+<section id="services">
+  <div class="container">
+    <span class="section-label">Что мы поставляем</span>
+    <h2 class="section-title">Профессиональные B2B решения</h2>
+    <p class="section-desc">Обеспечиваем бесперебойное снабжение вашего бизнеса оригинальными узлами, агрегатами и расходными материалами напрямую со складов производителей.</p>
     
-    <div class="container">
-      <div class="order-grid">
-        <div class="steps-wrapper">
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h3 class="service-title">Оригинальные запчасти</h3>
+        <p class="service-desc">Полный доступ к корейским каталогам Hyundai, Kia, Mobis. Работаем напрямую с оптовыми дистрибьюторами.</p>
+        <ul class="service-list">
+          <li>Двигатели в сборе и блоки</li>
+          <li>Элементы подвески и трансмиссии</li>
+          <li>Оптика и кузовные панели</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚜</div>
+        <h3 class="service-title">Спецтехника и агрегаты</h3>
+        <p class="service-desc">Поставка тяжелых узлов для экскаваторов, погрузчиков и кранов марок Doosan, Volvo, Hyundai.</p>
+        <ul class="service-list">
+          <li>Гидравлические насосы и клапаны</li>
+          <li>Редукторы хода и поворота</li>
+          <li>Гусеничные цепи и элементы ходовой</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <span class="section-label">О компании</span>
+        <h2 class="section-title">Прозрачный сервис экспорта из Кореи</h2>
+        <p class="section-desc" style="margin-bottom:0;">Мы исключили из цепочки поставок локальных перекупщиков. Вы получаете детали по реальной стоимости внутреннего рынка Южной Кореи, оплачивая только фиксированную стоимость наших услуг по подбору, проверке и отправке груза.</p>
+      </div>
+      <div class="about-features">
+        <div class="feat-box">
+          <h4>Официально</h4>
+          <p>Полный пакет экспортных документов для беспрепятственного прохождения таможни.</p>
+        </div>
+        <div class="feat-box">
+          <h4>Контроль качества</h4>
+          <p>Проверяем каждую позицию на соответствие VIN-коду перед упаковкой на складе.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GEOGRAPHY SECTION -->
+<section id="geography">
+  <div class="container">
+    <div class="geo-card">
+      <span class="section-label">Логистика</span>
+      <h2 class="section-title" style="margin-bottom:16px;">Доставка по всему миру</h2>
+      <p class="section-desc" style="margin: 0 auto 40px; text-align:center;">Отлаженные каналы отправки позволяют доставлять заказы любого объема — от экспресс-посылок до сборных морских контейнеров.</p>
+      
+      <div class="geo-grid">
+        <div class="geo-item">
+          <h4>Авиа-фрахт</h4>
+          <p>Срочные заказы и дефицитные позиции. Срок: от 5–7 дней.</p>
+        </div>
+        <div class="geo-item">
+          <h4>Морские перевозки</h4>
+          <p>Оптимально для тяжелых узлов спецтехники и крупных партий.</p>
+        </div>
+        <div class="geo-item">
+          <h4>Сборные грузы (LCL)</h4>
+          <p>Экономим ваш бюджет при отправке небольших партий товара.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER SECTION -->
+<section id="order" style="border-bottom: none;">
+  <div class="container">
+    <div class="order-grid">
+      <div>
+        <span class="section-label">Процесс работы</span>
+        <h2 class="section-title">Три шага к получению запчастей</h2>
+        
+        <div style="margin-top: 40px; display: flex; flex-direction: column;">
           <div class="step-box">
             <div class="step-num">01</div>
             <div class="step-content">
-              <h3 class="step-title">Заявка в мессенджер</h3>
-              <p class="step-desc">Отправьте VIN-код, каталожные номера или просто фотографии необходимых деталей.</p>
+              <h3 class="step-title">Запрос в мессенджер</h3>
+              <p class="step-desc" style="color: var(--muted); font-size:15px;">Скидывайте парт-номера, VIN-код автомобиля или фотографии нужного узла прямо в чат.</p>
             </div>
           </div>
           <div class="step-box">
             <div class="step-num">02</div>
             <div class="step-content">
-              <h3 class="step-title">Расчет и согласование</h3>
-              <p class="step-desc">Формируем смету напрямую по корейским прайс-листам в течение 15 минут.</p>
+              <h3 class="step-title">Согласование сметы</h3>
+              <p class="step-desc" style="color: var(--muted); font-size:15px;">В течение 15 минут мы проверяем остатки на корейских складах и присылаем вам итоговую стоимость.</p>
             </div>
           </div>
           <div class="step-box">
             <div class="step-num">03</div>
             <div class="step-content">
-              <h3 class="step-title">Отправка</h3>
-              <p class="step-desc">Упаковываем по международным стандартам и передаем в логистическую компанию.</p>
+              <h3 class="step-title">Упаковка и отправка</h3>
+              <p class="step-desc" style="color: var(--muted); font-size:15px;">Надежно упаковываем груз по международным стандартам защиты и передаем транспортной компании.</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="chat-container">
-          <div class="chat-header">
-            <h3 class="c-head-title">Связаться с менеджером</h3>
-            <p class="c-head-sub">Выберите удобный мессенджер для мгновенной оценки стоимости запчастей. Мы на связи <strong>24/7</strong>.</p>
-          </div>
-          <div class="messenger-options">
-            <a href="#" class="msg-btn msg-btn--wa">
-              <div class="msg-btn-content">
-                <span class="msg-icon">WhatsApp</span>
-                <span>Открыть чат</span>
-              </div>
-              <span class="msg-meta">Online</span>
-            </a>
-            <a href="#" class="msg-btn msg-btn--tg">
-              <div class="msg-btn-content">
-                <span class="msg-icon">Telegram</span>
-                <span>Написать менеджеру</span>
-              </div>
-              <span class="msg-meta">Online</span>
-            </a>
-          </div>
-          <div class="chat-guarantee">
-            <span>✓</span>
-            <p>Ответ в течение 15 минут. Подбор по базам Mobis и Doosan бесплатный.</p>
-          </div>
+      <div class="chat-container">
+        <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 12px;">Прямая связь с менеджером</h3>
+        <p style="color: var(--muted); font-size: 15px;">Выберите платформу. Мы бесплатно проконсультируем и подберем запчасти по официальным базам данных.</p>
+        
+        <div class="messenger-options">
+          <a href="https://wa.me/your_number" target="_blank" class="msg-btn msg-btn--wa">
+            <span>WhatsApp</span>
+            <span class="msg-meta">Online</span>
+          </a>
+          <a href="https://t.me/your_username" target="_blank" class="msg-btn msg-btn--tg">
+            <span>Telegram</span>
+            <span class="msg-meta">Online</span>
+          </a>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-</main>
-
+<!-- FLOATING WIDGET -->
 <div class="floating-widget">
   <div class="fw-menu" id="fw-menu">
-    <a href="#" class="fw-link fw-link--wa" title="WhatsApp">WA</a>
-    <a href="#" class="fw-link fw-link--tg" title="Telegram">TG</a>
+    <a href="https://wa.me/your_number" target="_blank" class="fw-link fw-link--wa">WA</a>
+    <a href="https://t.me/your_username" target="_blank" class="fw-link fw-link--tg">TG</a>
   </div>
-  <button class="fw-trigger" id="fw-trigger" aria-label="Связаться">
-    <div class="fw-badge"></div>
-    💬
-  </button>
+  <button class="fw-trigger" id="fw-trigger" aria-label="Связаться">💬</button>
 </div>
 
 <script>
-  // Простейший скрипт для работы шапки и меню (чтобы код был полностью рабочим)
+  // Логика прозрачности шапки при скролле
   window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
     if (window.scrollY > 50) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
   });
 
+  // Мобильное меню (бургер)
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('nav-links');
   burger.addEventListener('click', () => {
@@ -485,36 +428,20 @@
     navLinks.classList.toggle('active');
   });
 
+  // Закрытие мобильного меню при клике на ссылки
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+
+  // Плавающий виджет контактов
   const fwTrigger = document.getElementById('fw-trigger');
   const fwMenu = document.getElementById('fw-menu');
   fwTrigger.addEventListener('click', () => {
     fwMenu.classList.toggle('active');
   });
-
-  // Логика переключения страниц SPA по хэшу
-  function handleRoute() {
-    const hash = window.location.hash || '#home';
-    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-    document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active-link'));
-    
-    if (hash === '#home' || hash === '') {
-      document.getElementById('page-home').classList.add('active');
-    } else if (hash === '#services') {
-      document.getElementById('page-services').classList.add('active');
-    } else if (hash === '#order') {
-      document.getElementById('page-order').classList.add('active');
-    }
-    
-    const activeLink = document.querySelector(`.nav-links a[href="${hash}"]`);
-    if (activeLink) activeLink.classList.add('active-link');
-    
-    // Закрываем мобильное меню при переходе
-    burger.classList.remove('active');
-    navLinks.classList.remove('active');
-  }
-
-  window.addEventListener('hashchange', handleRoute);
-  window.addEventListener('load', handleRoute);
 </script>
 
 </body>
